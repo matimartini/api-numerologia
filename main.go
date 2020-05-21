@@ -1,20 +1,24 @@
 package main
 
 import (
-	"fmt"
-	"io"
-	"net/http"
+	"log"
 	"os"
+
 	"github.com/gin-gonic/gin"
 )
 
-
 func main() {
-	route := gin.Default()
 
-	route.GET("/", ping)
-	route.GET("/ping", ping)
+	port := os.Getenv("PORT")
 
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
+	router := gin.New()
+
+	router.GET("/", ping)
+	router.GET("/ping", ping)
 
 	router.Run(":" + port)
 }
@@ -25,8 +29,7 @@ func ping(c *gin.Context) {
 	})
 }
 
-func hello(c *gin.Context){
-	io.WriteString(w, "Hello Word")
+func hello(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "Hello Word!!!",
 	})
