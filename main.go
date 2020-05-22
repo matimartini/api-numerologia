@@ -19,7 +19,7 @@ func main() {
 
 	router.GET("/", hello)
 	router.GET("/ping", ping)
-	router.GET("calculate/:id")
+	router.GET("calculate/:id", getCalculate)
 
 	router.Run(":" + port)
 }
