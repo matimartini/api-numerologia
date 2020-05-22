@@ -12,14 +12,15 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		log.Fatal("$PORT must be set")
+		port = "8080"
+		log.Println("$PORT must be set")
 	}
 
 	router := gin.New()
 
 	router.GET("/", hello)
 	router.GET("/ping", ping)
-	router.GET("calculate/:id/:fecha", getCalculate)
+	router.GET("calculate", getCalculate)
 
 	router.Run(":" + port)
 }
@@ -37,8 +38,8 @@ func hello(c *gin.Context) {
 }
 
 func getCalculate(c *gin.Context) {
-	id := c.Param("id")
-	fecha := c.Param("fecha")
+	id := c.Query("id")
+	fecha := c.Query("fecha")
 
 	log.Println("id send param:", id)
 	c.JSON(200, gin.H{
