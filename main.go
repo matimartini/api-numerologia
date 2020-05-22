@@ -17,8 +17,9 @@ func main() {
 
 	router := gin.New()
 
-	router.GET("/", ping)
+	router.GET("/", hello)
 	router.GET("/ping", ping)
+	router.GET("calculate/:id")
 
 	router.Run(":" + port)
 }
@@ -35,14 +36,11 @@ func hello(c *gin.Context) {
 	})
 }
 
-// function without  gin-gonic
-/*func hello(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello Word")
-	fmt.Println("Hello Word!!!!")
-}
+func getCalculate(c *gin.Context) {
+	id := c.Param("id")
 
-func main() {
-	port := os.Getenv("PORT")
-	http.HandleFunc("/", hello)
-	http.ListenAndServe(":"+port, nil)
-}*/
+	log.Println("id send param:", id)
+	c.JSON(200, gin.H{
+		"message": "Num: " + id,
+	})
+}
