@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/matimartini/api-numerologia/controller"
 )
 
 func main() {
@@ -12,14 +13,15 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		log.Fatal("$PORT must be set")
+		port = "8080"
+		log.Println("$PORT must be set")
 	}
 
 	router := gin.New()
 
 	router.GET("/", hello)
 	router.GET("/ping", ping)
-	router.GET("calculate/:id", getCalculate)
+	router.GET("calculate", getCalculate)
 
 	router.Run(":" + port)
 }
@@ -37,10 +39,19 @@ func hello(c *gin.Context) {
 }
 
 func getCalculate(c *gin.Context) {
-	id := c.Param("id")
+	controller := controller.PersonController{
+		Context: c,
+	}
+	controller.GetPerson()
+
+	/*id := c.Query("name")
+	fecha := c.Query("fecha")
 
 	log.Println("id send param:", id)
+
+	p := &service.Person{}
+	p.NewPerson(id, fecha)
 	c.JSON(200, gin.H{
-		"message": "Num: " + id,
-	})
+		"message": "Num: " + p.FullName + " Fecha: " + p.FullName,
+	})*/
 }
