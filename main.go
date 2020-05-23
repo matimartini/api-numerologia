@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/matimartini/api-numerologia/controller"
 )
 
 func main() {
@@ -38,11 +39,19 @@ func hello(c *gin.Context) {
 }
 
 func getCalculate(c *gin.Context) {
-	id := c.Query("id")
+	controller := controller.PersonController{
+		Context: c,
+	}
+	controller.GetPerson()
+
+	/*id := c.Query("name")
 	fecha := c.Query("fecha")
 
 	log.Println("id send param:", id)
+
+	p := &service.Person{}
+	p.NewPerson(id, fecha)
 	c.JSON(200, gin.H{
-		"message": "Num: " + id + " Fecha: " + fecha,
-	})
+		"message": "Num: " + p.FullName + " Fecha: " + p.FullName,
+	})*/
 }
