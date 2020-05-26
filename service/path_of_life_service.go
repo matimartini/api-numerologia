@@ -1,22 +1,25 @@
 package service
 
 import (
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/matimartini/api-numerologia/utils"
 )
 
-type PathOfLifeService struct{}
+type PathOfLifeService struct {
+	Number      int    `json:"number"`
+	Description string `json:"description"`
+}
 
 func (p PathOfLifeService) CalculateNumberPathOfLife(date string) int {
 	dateFormat, _ := time.Parse("2006-01-02", date)
 	day := sumAllTheDigits(dateFormat.Day())
 	month := sumAllTheDigits(int(dateFormat.Month()))
-	year := sumAllTheDigits(dateFormat.Year())
+  year := sumAllTheDigits(dateFormat.Year())
 
 	num := day + month + year
-
-	num := int(dateFormat.Day()) + int(dateFormat.Month()) + int(dateFormat.Year())
 
 	numberPathOfLife := utils.SumNumberInteger(num)
 	return numberPathOfLife

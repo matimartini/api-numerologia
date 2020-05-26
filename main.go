@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-
 	port := os.Getenv("PORT")
 
 	if port == "" {
@@ -43,15 +42,22 @@ func getCalculate(c *gin.Context) {
 		Context: c,
 	}
 	controller.GetPerson()
-
-	/*id := c.Query("name")
-	fecha := c.Query("fecha")
-
-	log.Println("id send param:", id)
-
-	p := &service.Person{}
-	p.NewPerson(id, fecha)
-	c.JSON(200, gin.H{
-		"message": "Num: " + p.FullName + " Fecha: " + p.FullName,
-	})*/
 }
+
+/* ///
+client := database.Init()
+	fmt.Println(client)
+
+	iter := client.Collection("test-1").Documents(context.Background())
+	fmt.Println(iter)
+	for {
+		doc, err := iter.Next()
+
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			log.Fatalf("Failed to iterate: %v", err)
+		}
+		fmt.Println(doc.Data())
+	} */

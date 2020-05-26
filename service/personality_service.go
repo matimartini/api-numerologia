@@ -2,16 +2,27 @@ package service
 
 import (
 	"strings"
+
+	"github.com/matimartini/api-numerologia/database"
 )
 
-type Personality struct{}
+type Personality struct {
+	Number      int    `json:"number"`
+	Description string `json:"description"`
+}
 
-func (Personality) CalculateNumberPersonality(name string) int {
+func (personality *Personality) CalculateNumberPersonality(name string) {
 	consonants := mapConsonants()
 	nameLetters := strings.Split(name, "")
 
 	numberPersonality := CalculateNumberLetters(consonants, nameLetters)
-	return numberPersonality
+	personality.Number = numberPersonality
+
+	document := database.GetDesciption(numberPersonality, "personality")
+
+	var personalityParser Personality
+	document.DataTo(&personalityParser)
+	personality.Description = personalityParser.Description
 }
 
 func mapConsonants() map[string]int {
