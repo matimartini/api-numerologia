@@ -1,6 +1,8 @@
 package service
 
 import (
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/matimartini/api-numerologia/utils"
@@ -18,8 +20,6 @@ func (p PathOfLifeService) CalculateNumberPathOfLife(date string) int {
 	year := sumAllTheDigits(dateFormat.Year())
 
 	num := day + month + year
-
-	num := int(dateFormat.Day()) + int(dateFormat.Month()) + int(dateFormat.Year())
 
 	numberPathOfLife := utils.SumNumberInteger(num)
 	return numberPathOfLife
