@@ -1,23 +1,20 @@
 package service
 
 import (
-	"log"
-
 	"github.com/matimartini/api-numerologia/utils"
 )
 
 type Person struct {
-	FullName          string `json:"full_name"`
-	BirthDate         string `json:"birth_date"`
-	NumberPathOfLife  int    `json:"number_path_of_life"`
-	SoulAmbition      int    `json:"soul_ambition"`
-	NumberPersonality int    `json:"number_personality"`
-	NumberExpression  int    `json:"number_expression"`
-	GoalLife          int    `json:"goal_life"`
+	FullName         string       `json:"full_name"`
+	BirthDate        string       `json:"birth_date"`
+	NumberPathOfLife int          `json:"number_path_of_life"`
+	Personality      Personality  `json:"personality"`
+	Expression       Expression   `json:"expression"`
+	GoalLife         GoalLife     `json:"goal_life"`
+	SoulAmbition     SoulAmbition `json:"soul_ambition"`
 }
 
 func (p *Person) NewPerson(name string, date string) {
-	log.Println("Ingresa creacion persona!!!   ", name, date)
 	p.FullName = name
 	p.BirthDate = date
 	p.calculateNumberPathOfLife()
@@ -33,20 +30,27 @@ func (p *Person) calculateNumberPathOfLife() {
 }
 
 func (p *Person) calculateSoulAmbition() {
-	serviceSoulAmbition := SoulAmbitionService{}
-	p.SoulAmbition = serviceSoulAmbition.CalculateNumberSoulAmbition(p.FullName)
+	soulAmbition := &SoulAmbition{}
+	soulAmbition.CalculateNumberSoulAmbition(p.FullName)
+	p.SoulAmbition = *soulAmbition
 }
 
 func (p *Person) calculatePersonality() {
-	servicePersonality := Personality{}
-	p.NumberPersonality = servicePersonality.CalculateNumberPersonality(p.FullName)
+	personality := &Personality{}
+	personality.CalculateNumberPersonality(p.FullName)
+	p.Personality = *personality
 }
 
 func (p *Person) calculateNumberExpression() {
-	numberExpression := utils.SumNumberInteger(p.SoulAmbition + p.NumberPersonality)
-	p.NumberExpression = numberExpression
+	numberExpression := utils.SumNumberInteger(p.SoulAmbition.Number + p.Personality.Number)
+	expression := &Expression{}
+	expression.GetDescriptionExpression(numberExpression)
+	p.Expression = *expression
 }
 
 func (p *Person) calculateGoalLife() {
-	p.GoalLife = utils.SumNumberInteger(p.NumberExpression + p.NumberPathOfLife)
+	number := utils.SumNumberInteger(p.Expression.Number + p.NumberPathOfLife)
+	goalLife := &GoalLife{}
+	goalLife.GetDescriptionGoalLife(number)
+	p.GoalLife = *goalLife
 }
