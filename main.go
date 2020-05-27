@@ -43,21 +43,3 @@ func getCalculate(c *gin.Context) {
 	}
 	controller.GetPerson()
 }
-
-/* ///
-client := database.Init()
-	fmt.Println(client)
-
-	iter := client.Collection("test-1").Documents(context.Background())
-	fmt.Println(iter)
-	for {
-		doc, err := iter.Next()
-
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			log.Fatalf("Failed to iterate: %v", err)
-		}
-		fmt.Println(doc.Data())
-	} */
