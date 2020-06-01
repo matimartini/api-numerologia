@@ -8,10 +8,7 @@ import (
 	"github.com/matimartini/api-numerologia/utils"
 )
 
-type PathOfLifeService struct {
-	Number      int    `json:"number"`
-	Description string `json:"description"`
-}
+type PathOfLifeService struct{}
 
 func (p PathOfLifeService) CalculateNumberPathOfLife(date string) int {
 	dateFormat, _ := time.Parse("2006-01-02", date)
