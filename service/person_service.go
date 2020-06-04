@@ -5,13 +5,13 @@ import (
 )
 
 type Person struct {
-	FullName         string       `json:"full_name"`
-	BirthDate        string       `json:"birth_date"`
-	NumberPathOfLife int          `json:"number_path_of_life"`
-	Personality      Personality  `json:"personality"`
-	Expression       Expression   `json:"expression"`
-	GoalLife         GoalLife     `json:"goal_life"`
-	SoulAmbition     SoulAmbition `json:"soul_ambition"`
+	FullName         string       `json:"nombre"`
+	BirthDate        string       `json:"fecha_nacimiento"`
+	NumberPathOfLife int          `json:"camino_de_vida"`
+	Personality      Personality  `json:"personalidad"`
+	Expression       Expression   `json:"expresion"`
+	SoulAmbition     SoulAmbition `json:"deseo_del_alma"`
+	GoalLife         GoalLife     `json:"meta_de_vida"`
 }
 
 func (p *Person) NewPerson(name string, date string) {
