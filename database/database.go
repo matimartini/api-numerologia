@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"strconv"
 
@@ -30,6 +31,8 @@ func GetDesciption(number int, nameDocument string) *firestore.DocumentSnapshot 
 		log.Fatalf("Failed to iterate: %v", err)
 	}
 
-	client.Close()
+	if !document.Exists() {
+		fmt.Println("Error not description name document: ", nameDocument)
+	}
 	return document
 }

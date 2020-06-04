@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/matimartini/api-numerologia/database"
@@ -11,18 +12,19 @@ type SoulAmbition struct {
 	Description string `json:"description"`
 }
 
-func (s *SoulAmbition) CalculateNumberSoulAmbition(name string) {
+func (soulAmbition *SoulAmbition) CalculateNumberSoulAmbition(name string) {
 	vowels := mapVowels()
 	nameLetters := strings.Split(name, "")
 
 	numberSoulAmbition := CalculateNumberLetters(vowels, nameLetters)
 	document := database.GetDesciption(numberSoulAmbition, "soul-ambition")
 
-	var c SoulAmbition
-	document.DataTo(&c)
+	soulAmbition.Number = numberSoulAmbition
+	document.DataTo(&soulAmbition)
 
-	s.Description = c.Description
-	s.Number = numberSoulAmbition
+	if soulAmbition.Description == "" {
+		fmt.Println("Error empty description soulAmbition. number: ", numberSoulAmbition)
+	}
 }
 
 func mapVowels() map[string]int {

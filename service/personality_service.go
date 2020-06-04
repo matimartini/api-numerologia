@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/matimartini/api-numerologia/database"
@@ -19,10 +20,11 @@ func (personality *Personality) CalculateNumberPersonality(name string) {
 	personality.Number = numberPersonality
 
 	document := database.GetDesciption(numberPersonality, "personality")
+	document.DataTo(&personality)
 
-	var personalityParser Personality
-	document.DataTo(&personalityParser)
-	personality.Description = personalityParser.Description
+	if personality.Description == "" {
+		fmt.Println("Error empty descprition personality. number: ", numberPersonality)
+	}
 }
 
 func mapConsonants() map[string]int {
