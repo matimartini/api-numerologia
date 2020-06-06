@@ -12,6 +12,7 @@ type Person struct {
 	Expression       Expression   `json:"expresion"`
 	SoulAmbition     SoulAmbition `json:"deseo_del_alma"`
 	GoalLife         GoalLife     `json:"meta_de_vida"`
+	Lack             ListLack     `json:"carencias"`
 }
 
 func (p *Person) NewPerson(name string, date string) {
@@ -22,6 +23,7 @@ func (p *Person) NewPerson(name string, date string) {
 	p.calculatePersonality()
 	p.calculateNumberExpression()
 	p.calculateGoalLife()
+	p.CalculateLack()
 }
 
 func (p *Person) calculateNumberPathOfLife() {
@@ -53,4 +55,10 @@ func (p *Person) calculateGoalLife() {
 	goalLife := &GoalLife{}
 	goalLife.GetDescriptionGoalLife(number)
 	p.GoalLife = *goalLife
+}
+
+func (p *Person) CalculateLack() {
+	listLack := &ListLack{}
+	listLack.CalculateLack(p.FullName)
+	p.Lack = *listLack
 }
